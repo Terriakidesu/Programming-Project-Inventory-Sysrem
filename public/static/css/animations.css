@@ -1,0 +1,24 @@
+.shake {
+    animation-name: shake;
+    animation-duration: 100ms;
+    animation-timing-function: linear;
+    animation-iteration-count: 3;
+    animation-fill-mode: forwards;
+}
+
+@keyframes shake {
+
+    25% {
+        transform: translateX(-0.1rem);
+    }
+
+    50% {
+        transform: translateX(0rem);
+
+    }
+
+    75% {
+        transform: translateX(0.1rem);
+    }
+
+}

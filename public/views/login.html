@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="authenticated" value="{{authenticated}}">
+
+    <title>Login Page</title>
+
+    <link rel="stylesheet" href="/public/static/css/commons.css">
+    <link rel="stylesheet" href="/public/static/css/login.css">
+    <link rel="stylesheet" href="/public/static/css/animations.css">
+    <link rel="stylesheet" href="/public/static/fontawesome/css/all.min.css">
+    <script src="/public/static/fontawesome/js/all.min.js"></script>
+
+    <style>
+    </style>
+
+</head>
+
+<body>
+    <div class="container" id="formContainer">
+        <form id="loginForm">
+            <div class="noselect" id="loginLabel">
+                <span>
+                    <i class="fa-regular fa-user"></i>
+                </span>
+                <span>
+                    Login
+                </span>
+            </div>
+
+            <span id="inputContainer">
+                <span><i class="fa-solid fa-lock noselect"></i></span>
+                <input id="passwordInput" autofocus required name="password" type="password" placeholder="Password">
+                <span id="showHideButton"><i class="fa-solid fa-eye noselect"></i></span>
+            </span>
+
+            <div id="submitButtonContainer">
+                <button id="submitButton" type="submit">Login</button>
+            </div>
+        </form>
+    </div>
+    <script>
+
+        let form = document.getElementById("loginForm");
+        let formContainer = document.getElementById("formContainer");
+        let inputContainer = document.getElementById("inputContainer");
+        let submitButton = document.getElementById("submitButton");
+        let showHideButton = document.getElementById("showHideButton");
+        let passwordInput = document.getElementById("passwordInput");
+
+
+        form.addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            submitButton.disabled = true;
+
+            let formData = new FormData(form);
+            await fetch("/auth ", {
+                method: "POST",
+                body: formData,
+            }).then(async res => {
+
+                if (res.status == 200) {
+
+                    let loginStatus = await res.json();
+                    if (loginStatus.success) {
+                        submitButton.disabled = false;
+
+                        location.reload();
+                    } else {
+                        formContainer.classList.toggle("shake");
+                        inputContainer.classList.toggle("redHighlight");
+
+                        setTimeout(() => {
+                            formContainer.classList.toggle("shake");
+                            inputContainer.classList.toggle("redHighlight");
+
+                            submitButton.disabled = false;
+                        }, 500);
+                    }
+                }
+
+            }).catch((reason) => {
+                console.error(reason);
+                submitButton.disabled = false;
+            });
+
+        });
+
+        inputContainer.addEventListener("click", (event) => {
+            passwordInput.focus()
+        })
+
+        showHideButton.addEventListener("click", (event) => {
+
+            showHideButton.querySelector(":first-child").classList.toggle("fa-eye");
+            showHideButton.querySelector(":first-child").classList.toggle("fa-eye-slash");
+
+            if (passwordInput.type == "password") {
+                passwordInput.type = "text";
+            } else {
+                passwordInput.type = "password";
+            }
+        })
+
+    </script>
+</body>
+
+</html>
