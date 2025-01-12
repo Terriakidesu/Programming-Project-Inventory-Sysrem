@@ -30,8 +30,8 @@ body {
 
 #formContainer {
     display: inline-block;
-    height: auto;
     width: 25rem;
+    height: auto;
     align-content: center;
     background: var(--form-background-color);
     backdrop-filter: blur(10px) brightness(130%);
@@ -65,10 +65,9 @@ body {
 #inputsContainer {
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: space-around;
-    align-content: space-between;
-    height: 6rem;
+    height: 13rem;
 }
 
 .inputContainer {
@@ -146,5 +145,22 @@ body {
 #submitButtonContainer>#submitButton:disabled {
     color: var(--border-color);
     border: 3px solid var(--border-color);
+}
 
+.infoContainer {
+    text-align: left;
+    font-size: small;
+    padding: 0.5rem 0 1rem 0;
+    margin-top: -0.2rem;
+}
+
+.infoContainer>span>span:first-child {
+    font-size: medium;
+}
+
+.info {
+    display: inline-block;
+    width: 100%;
+    line-height: 100%;
+    vertical-align: middle;
 }

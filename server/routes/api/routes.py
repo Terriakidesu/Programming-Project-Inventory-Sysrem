@@ -3,10 +3,10 @@ from fastapi.responses import JSONResponse
 
 from ...utils import database
 
-beverage_router = APIRouter(prefix="/beverages")
+api_router = APIRouter(prefix="/api")
 
 
-@beverage_router.post("/search", response_class=JSONResponse)
+@api_router.post("/products/search", response_class=JSONResponse)
 async def search(request: Request, name: str = Form(...)):
     if name is None or name.strip() == "":
         return []
@@ -15,6 +15,6 @@ async def search(request: Request, name: str = Form(...)):
     return results
 
 
-@beverage_router.get("/all", response_class=JSONResponse)
+@api_router.get("/products/all", response_class=JSONResponse)
 async def fetch_all_beverages(request: Request):
     return database.fetchAll()

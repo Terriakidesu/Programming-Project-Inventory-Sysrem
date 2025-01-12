@@ -1,0 +1,52 @@
+.inventoryContainer>.inventoryHeader {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-content: stretch;
+    border-bottom: 1px solid rgb(104, 104, 104);
+    background-color: rgb(165, 165, 165);
+}
+
+.inventoryHeader>.inventoryItemLabel+.inventoryItemLabel {
+    border-left: 1px solid rgb(104, 104, 104);
+}
+
+.inventoryItem {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-content: stretch;
+}
+
+.inventoryItem+.inventoryItem {
+    border-top: 1px solid rgb(165, 165, 165);
+}
+
+.inventoryItemLabel {
+    text-align: center;
+    flex: 1 1 auto;
+    padding: 0.5rem;
+    width: 0;
+}
+
+.inventoryItem>.inventoryItemLabel+.inventoryItemLabel {
+    border-left: 1px solid rgb(198, 198, 198);
+}
+
+.inventoryHeader>.inventoryItemLabel:first-child,
+.inventoryItem>.inventoryItemLabel:first-child {
+    max-width: 1rem;
+}
+
+.inventoryHeader>.inventoryItemLabel:last-child,
+.inventoryItem>.inventoryItemLabel:last-child {
+    max-width: 5rem;
+}
+
+.inventoryItem>.inventoryItemLabel:last-child>span {
+    margin: 0 0.5rem;
+}
+
+.actionButton {
+    cursor: pointer;
+}

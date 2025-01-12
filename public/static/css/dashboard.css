@@ -1,0 +1,44 @@
+.statsContainer {
+    margin: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.statsContainer>.stat {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 20rem;
+    padding: 1rem;
+    border-radius: 5px;
+    background-color: rgb(224, 224, 224);
+}
+
+.statsContainer>.stat>.icon {
+    display: inline-block;
+    font-size: 72pt;
+    margin-right: 0.5rem;
+}
+
+.statsContainer>.stat>.statLabelContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0.2rem;
+}
+
+.statsContainer>.stat>.statLabelContainer>.statLabel {
+    display: block;
+    font-size: 20pt;
+    text-align: right;
+}
+
+.statsContainer>.stat>.statLabelContainer>:last-child {
+    font-size: 30pt;
+    display: block;
+    width: 100%;
+    text-align: right;
+}

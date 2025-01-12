@@ -14,6 +14,46 @@
                                     supported by Chrome, Edge, Opera and Firefox */
 }
 
+.red {
+    color: rgb(255, 71, 71);
+}
+
+.green {
+    color: rgb(9, 177, 9);
+}
+
 .redHighlight {
     box-shadow: rgb(255, 71, 71) 0 0 5px 3px;
+}
+
+.warning {
+    font-size: medium;
+    width: 100%;
+    background-color: rgba(247, 255, 28, 0.618);
+    color: rgb(158, 94, 3);
+    padding: 0.5rem 0;
+    border-radius: 0.5rem;
+    border: 2px dashed rgb(213, 169, 22);
+    transition: opacity 100ms ease-in-out;
+}
+
+.hide {
+    opacity: 0;
+}
+
+.container {
+    margin: 1rem;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    border: 1px solid rgb(124, 124, 124);
+    border-radius: 5px;
+}
+
+.container>.containerTitle {
+    padding: 0.5rem;
+    padding-left: 1rem;
+    font-size: x-large;
+    color: rgb(88, 88, 88);
+    border-bottom: 1px solid rgb(124, 124, 124);
+    background: rgb(237, 237, 237);
+    border-radius: 5px 5px 0 0;
 }

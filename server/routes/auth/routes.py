@@ -1,62 +1,25 @@
+from typing import Annotated
+
 from datetime import datetime, timezone, timedelta
 
 from fastapi import APIRouter, Request, Form, Depends
 from fastapi.responses import JSONResponse, RedirectResponse
-from fastapi.exceptions import HTTPException
 from fastapi.templating import Jinja2Templates
 
 from .models import SessionData
-from ...utils import Settings, Password
+from .dependencies import getCurrentSession
+
+from ...utils import Settings
+from ...utils.account import Account_Manager
+from ...utils.account.models import Account
 
 templates = Jinja2Templates(directory="public/views")
 
-auth_router = APIRouter()
+auth_router = APIRouter(prefix="/auth")
 
 
-def getCurrentSession(request: Request):
-    session = request.session
-
-    if "authenticated" not in session or not session["authenticated"]:
-        raise HTTPException(status_code=401, detail="Unauthorized")
-
-    refreshed_at = session.get("refreshed_at")
-    expires_at = session.get("expires_at")
-    if not expires_at:
-        raise HTTPException(status_code=401, detail="Session expired")
-
-    session_end_time = datetime.fromisoformat(expires_at)
-    session_refresh_at = datetime.fromisoformat(refreshed_at)
-
-    now = datetime.now(timezone.utc)
-
-    if now >= session_end_time:
-        request.session.clear()
-        raise HTTPException(status_code=401, detail="Session expired")
-    else:
-        request.session["refreshed_at"] = now.isoformat()
-        extended_time = now + \
-            timedelta(seconds=Settings.Cookie.max_age)
-        request.session["expires_at"] = extended_time.isoformat()
-
-    return SessionData(**request.session)
-
-
-# @auth_router.get("/")
-# async def home(request: Request, session: SessionData = Depends(getCurrentSession)):
-#     return templates.TemplateResponse("index.html", {"request": request})
-
-
-@auth_router.get("/login")
-async def login(request: Request):
-    session = request.session
-    if "authenticated" not in session or not session["authenticated"]:
-        return templates.TemplateResponse("login.html", {"request": request, "authenticated": request.session.get("authenticated", False)})
-
-    return RedirectResponse("/", status_code=302)
-
-
-@auth_router.post("/auth")
-async def auth(request: Request, password: str = Form(...)):
+@auth_router.post("/login")
+async def auth_login(request: Request, account: Annotated[Account, Form()]):
 
     if request.session.get("authenticated"):
         return JSONResponse({
@@ -64,10 +27,10 @@ async def auth(request: Request, password: str = Form(...)):
             "message": "Already Authenticated"
         })
 
-    if not Password.verify_password(password):
+    if not Account_Manager.verify_auth(account):
         return JSONResponse({
             "success": False,
-            "message": "Invalid Password"
+            "message": "Invalid Username or Password."
         })
 
     now = datetime.now(timezone.utc)
@@ -84,8 +47,34 @@ async def auth(request: Request, password: str = Form(...)):
     })
 
 
+@auth_router.post("/signup")
+async def auth_signup(request: Request, account: Annotated[Account, Form()]):
+
+    now = datetime.now(timezone.utc)
+
+    request.session["authenticated"] = True
+    request.session["created_at"] = now.isoformat()
+    request.session["refreshed_at"] = now.isoformat()
+    expires_at = now + timedelta(seconds=Settings.Cookie.max_age)
+    request.session["expires_at"] = expires_at.isoformat()
+
+    try:
+        Account_Manager.save_account(account)
+        return {
+            "success": True,
+            "message": "Singup Success!"
+        }
+    except Exception:
+        pass
+
+    return {
+        "success": False,
+        "message": "Singup Failed!"
+    }
+
+
 @auth_router.get("/session", response_class=JSONResponse)
-async def checkSession(request: Request):
+async def check_session(request: Request):
 
     if not request.session.get("authenticated"):
         return {
@@ -103,7 +92,7 @@ async def checkSession(request: Request):
 
 
 @auth_router.post("/logout")
-async def logout(request: Request, session: SessionData = Depends(getCurrentSession)):
+async def auth_logout(request: Request, session: SessionData = Depends(getCurrentSession)):
 
     if session.authenticated:
         request.session.clear()

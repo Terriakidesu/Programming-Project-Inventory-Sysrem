@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="authenticated" value="{{authenticated}}">
+
+    <title>Signup Page</title>
+
+    <link rel="stylesheet" href="/public/static/css/commons.css">
+    <link rel="stylesheet" href="/public/static/css/signup.css">
+    <link rel="stylesheet" href="/public/static/css/animations.css">
+    <script src="/public/static/js/signup.js" defer></script>
+
+    <link rel="stylesheet" href="/public/static/fontawesome/css/all.min.css">
+    <script src="/public/static/fontawesome/js/all.min.js"></script>
+
+
+    <style>
+    </style>
+
+</head>
+
+<body>
+    <div id="formContainer">
+        <form id="loginForm" action="/auth/signup">
+            <div class="noselect" id="loginLabel">
+                <span>
+                    <i class="fa-regular fa-user-circle"></i>
+                </span>
+                <span>
+                    Signup
+                </span>
+            </div>
+            <div id="warning" class="warning hide">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <span id="warningMessage">
+                    Message Here!
+                </span>
+            </div>
+            <br>
+            <div id="inputsContainer">
+                <span class="inputContainer">
+                    <span><i class="fa-solid fa-user noselect"></i></span>
+                    <input id="usernameInput" autofocus required autocomplete="off" name="username" type="text"
+                        placeholder="Username">
+                </span>
+                <div id="usernameInfoContainer" class="infoContainer noselect">
+                    <span class="info red">
+                        <span>
+                            <i class="fa-solid fa-xmark"></i>
+                        </span>
+                        Should not include spaces or invalid characters.
+                    </span>
+                    <span class="info red">
+                        <span>
+                            <i class="fa-solid fa-xmark"></i>
+                        </span>
+                        at least 4 characters.
+                    </span>
+                </div>
+                <span id="passwordContainer" class="inputContainer">
+                    <span><i class="fa-solid fa-lock noselect"></i></span>
+                    <input id="passwordInput" autofocus required name="password" type="password" placeholder="Password">
+                    <span id="showHideButton"><i class="fa-solid fa-eye noselect"></i></span>
+                </span>
+                <div id="passwordInfoContainer" class="infoContainer noselect">
+                    <span class="info red">
+                        <span>
+                            <i class="fa-solid fa-xmark"></i>
+                        </span>
+                        Should not include spaces.
+                    </span>
+                    <span class="info red">
+                        <span>
+                            <i class="fa-solid fa-xmark"></i>
+                        </span>
+                        Should not include invalid characters.
+                    </span>
+                    <span class="info red">
+                        <span>
+                            <i class="fa-solid fa-xmark"></i>
+                        </span>
+                        at least 8 characters.
+                    </span>
+                </div>
+            </div>
+            <div id="submitButtonContainer">
+                <button id="submitButton" type="submit">Signup</button>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>

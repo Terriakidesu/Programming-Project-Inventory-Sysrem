@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+
+    <link rel="stylesheet" href="/public/static/css/navbar.css">
+    <link rel="stylesheet" href="/public/static/css/dashboard.css">
+    <link rel="stylesheet" href="/public/static/css/commons.css">
+    <link rel="stylesheet" href="/public/static/fontawesome/css/all.min.css">
+    <script src="/public/static/fontawesome/js/all.min.js"></script>
+    <script src="/public/static/js/navbar.js" defer></script>
+    <script src="/public/static/js/dashboard.js" defer></script>
+
+</head>
+
+<body>
+    <div class="navigationContainer">
+        <div class="navigationTitleContainer">
+            <span id="navigationTitle">Inventory System</span>
+        </div>
+        <div id="logoutContainer">
+            <form method="post" action="/auth/logout" target="_top">
+                <a onclick="parentNode.submit()">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                </a>
+            </form>
+        </div>
+    </div>
+
+    <div class="navigationMenuContainer">
+        <span href="/" aria-selected="true" class="navigationMenu">Home</span>
+        <span href="/inventory" class="navigationMenu">Inventory</span>
+        <span href="/orders" class="navigationMenu">Orders</span>
+        <span href="/settings" class="navigationMenu">Settings</span>
+    </div>
+
+    <div class="container">
+        <div class="containerTitle">
+            Dashboard
+        </div>
+
+        <div class="statsContainer">
+            <div class="stat">
+                <span class="icon">
+                    <i class="fa-solid fa-boxes-stacked"></i>
+                </span>
+                <div class="statLabelContainer">
+                    <span class="statLabel">
+                        Total Products
+                    </span>
+                    <span class="statLabel">
+                        0
+                    </span>
+                </div>
+            </div>
+            <div class="stat">
+                <span class="icon">
+                    <i class="fa-solid fa-cart-arrow-down"></i>
+                </span>
+                <div class="statLabelContainer">
+                    <span class="statLabel">
+                        Total Orders
+                    </span>
+                    <span class="statLabel">
+                        0
+                    </span>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

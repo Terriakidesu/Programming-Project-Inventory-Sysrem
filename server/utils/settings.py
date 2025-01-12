@@ -1,6 +1,7 @@
 import os
 import configparser
 
+from dotenv import load_dotenv
 from pydantic import BaseModel
 
 from .singleton import Singleton
@@ -10,22 +11,11 @@ CONFIG_PATH = "config.ini"
 DEFAULT_CONFIG = """
 [Cookie]
 max_age=60
-
-[Security]
-; Default Password: Administrator
-password_hash=e7d3e769f3f593dadcb8634cc5b09fc90dd3a61c4a06a79cb0923662fe6fae6b
-
-[Secrets]
-secret_key=ReplaceMeOnProduction
 """.strip()
 
 
 class CookieSettings(BaseModel):
     max_age: int
-
-
-class SecuritySettings(BaseModel):
-    password_hash: str
 
 
 class SecretsSettings(BaseModel):
@@ -36,6 +26,8 @@ class ConfigSettings(object):
     __metaclass__ = Singleton
 
     def __init__(self):
+        load_dotenv()
+
         self.checkConfig()
         self.config = configparser.ConfigParser()
         self.readConfig()
@@ -50,10 +42,9 @@ class ConfigSettings(object):
 
         self.Cookie: CookieSettings = CookieSettings(
             **self.config["Cookie"])
-        self.Security: SecuritySettings = SecuritySettings(
-            **self.config["Security"])
+
         self.Secrets: SecretsSettings = SecretsSettings(
-            **self.config["Secrets"])
+            secret_key=os.getenv("secret_key"))
 
 
 Settings = ConfigSettings()

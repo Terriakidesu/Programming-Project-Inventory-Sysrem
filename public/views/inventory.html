@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory</title>
+
+    <link rel="stylesheet" href="/public/static/css/navbar.css">
+    <link rel="stylesheet" href="/public/static/css/inventory.css">
+    <link rel="stylesheet" href="/public/static/css/commons.css">
+    <link rel="stylesheet" href="/public/static/fontawesome/css/all.min.css">
+    <script src="/public/static/fontawesome/js/all.min.js"></script>
+    <script src="/public/static/js/navbar.js" defer></script>
+    <script src="/public/static/js/inventory.js" defer></script>
+
+</head>
+
+<body>
+    <div class="navigationContainer">
+        <div class="navigationTitleContainer">
+            <span id="navigationTitle">Inventory System</span>
+        </div>
+        <div id="logoutContainer">
+            <form method="post" action="/auth/logout" target="_top">
+                <a onclick="parentNode.submit()">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                </a>
+            </form>
+        </div>
+    </div>
+
+    <div class="navigationMenuContainer">
+        <span href="/" class="navigationMenu">Home</span>
+        <span href="/inventory" aria-selected="true" class="navigationMenu">Inventory</span>
+        <span href="/orders" class="navigationMenu">Orders</span>
+        <span href="/settings" class="navigationMenu">Settings</span>
+    </div>
+
+    <div class="container">
+        <div class="containerTitle">
+            Inventory
+        </div>
+
+
+        <div class="inventoryContainer">
+            <div class="inventoryHeader">
+                <span class="inventoryItemLabel">#</span>
+                <span class="inventoryItemLabel">Name</span>
+                <span class="inventoryItemLabel">Size</span>
+                <span class="inventoryItemLabel">Quantity</span>
+                <span class="inventoryItemLabel">Piece Price</span>
+                <span class="inventoryItemLabel">Wholesale Quantity</span>
+                <span class="inventoryItemLabel">Wholesale Price</span>
+                <span class="inventoryItemLabel">Actions</span>
+            </div>
+            <div class="inventoryItems">
+
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
