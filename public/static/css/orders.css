@@ -1,0 +1,217 @@
+#orderDetailsTitle {
+
+    display: flex;
+    justify-content: space-between;
+}
+
+#orderViewerContents {
+    align-content: stretch;
+}
+
+#orderViewerContent {
+    flex-grow: 1;
+}
+
+#orderDetails {
+    width: 60rem;
+    height: 40rem;
+}
+
+#orderDetailsValue {
+    height: 13.5rem;
+}
+
+.orderDetailItems {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    overflow-y: auto;
+    gap: 1rem;
+    background-color: rgb(191, 191, 191);
+    padding: 0.5rem;
+    border-radius: 10px;
+    height: 12.5rem;
+}
+
+.orderDetailItem {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    background-color: white;
+    padding: 0.5rem;
+    border-radius: 5px;
+    width: 15rem;
+    transition: all 100ms ease-in-out;
+}
+
+.orderDetailItemTitles {
+    flex-grow: 1;
+    padding-bottom: 0.2rem;
+    margin-bottom: 0.2rem;
+    border-bottom: 1px solid grey;
+}
+
+.orderDetailItemDetails {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-content: stretch;
+    width: 100%;
+}
+
+.orderDetailItemDetails>.orderItemDetail {
+    flex-grow: 1;
+    display: inline-block;
+}
+
+.orderDetailItemLabel {
+    display: flex;
+    justify-content: space-between;
+}
+
+.orderDetailItemButtons {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+}
+
+.orderDetailItemQuantityTitle {
+    padding: 0.5rem 0rem;
+}
+
+input.orderItemQuantity {
+    width: 2rem;
+    height: 2rem;
+    text-align: center;
+}
+
+input.orderItemQuantity::-webkit-outer-spin-button,
+input.orderItemQuantity::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number].orderItemQuantity {
+    -moz-appearance: textfield;
+}
+
+.orderItems {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1rem;
+    background-color: rgb(224, 224, 224);
+    padding: 1rem;
+}
+
+.orderItem {
+    width: 15rem;
+    height: 17rem;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: rgb(178, 178, 178) 0 0 10px 2px;
+}
+
+.orderItemHeader {
+    background-color: rgb(232, 232, 232);
+    height: 1.8rem;
+    border-radius: 10px 10px 0 0;
+    text-align: center;
+}
+
+.orderItemTitle {
+    display: block;
+    padding-top: 0.2rem;
+    color: rgb(155, 155, 155);
+    font-size: 9.2pt;
+    height: 100%;
+    line-height: 100%;
+    padding-top: 0.5rem;
+}
+
+.orderItemDetails {
+    padding: 0.2rem 0.5rem;
+}
+
+.orderItemDetail {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.orderItemDetail>span:last-child {
+    text-align: end;
+}
+
+.orderItemDetail2 {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    text-align: center;
+    justify-content: flex-start;
+    height: 7.5rem;
+}
+
+.orderItemDetail2>span:first-child {
+    padding: 0.2rem 0;
+    background-color: rgb(214, 214, 214);
+    color: rgb(116, 116, 116);
+    border-radius: 1rem;
+}
+
+.orderItemCost {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.orderItemButtons {
+    display: flex;
+}
+
+.orderItemButtons>.orderItemButton:first-child {
+    border-radius: 0 0 0 10px;
+}
+
+.orderItemButtons>.orderItemButton:last-child {
+    border-radius: 0 0 10px 0;
+}
+
+.orderItemButton {
+    flex: 1;
+    height: 1.7rem;
+    border: none;
+    transition: background-color 100ms ease-in-out, color 100ms ease-in-out;
+
+}
+
+.orderItemButton:hover {
+    color: white;
+    background-color: rgb(100, 151, 255);
+}
+
+.orderItemButton:active {
+    color: rgb(255, 255, 255);
+    background-color: blue;
+}
+
+.orderItemButton[name=delete] {
+    color: white;
+    background-color: red;
+}
+
+.orderItemButton[name=delete]:hover {
+    color: black;
+    background-color: rgb(255, 147, 147);
+}
+
+.orderItemButton[name=delete]:active {
+    color: black;
+    background-color: rgb(255, 223, 223);
+}

@@ -1,0 +1,26 @@
+.settingsContainer {}
+
+.settingsCategory {
+    padding: 1rem;
+}
+
+.settingsCategory>.settingsCategoryTitle {
+    background-color: rgb(206, 206, 206);
+    padding: 0.5rem;
+    padding-left: 1rem;
+    font-size: x-large;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+.settingsCategoryItem {
+    padding-left: 2rem;
+}
+
+.settingsCategoryItemTitle {
+    padding: 0.5rem 0rem;
+}
+
+.settingsCategoryDetails>form#accountForm>div {
+    padding-top: 0.2rem;
+}

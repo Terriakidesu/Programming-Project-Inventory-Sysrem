@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory</title>
+
+    <link rel="stylesheet" href="/public/static/css/navbar.css">
+    <link rel="stylesheet" href="/public/static/css/settings.css">
+    <link rel="stylesheet" href="/public/static/css/commons.css">
+    <link rel="stylesheet" href="/public/static/fontawesome/css/all.min.css">
+    <script src="/public/static/fontawesome/js/all.min.js"></script>
+    <script src="/public/static/js/navbar.js" defer></script>
+    <script src="/public/static/js/settings.js" defer></script>
+
+</head>
+
+<body>
+    <div class="navigationContainer">
+        <div class="navigationTitleContainer">
+            <span id="navigationTitle">Inventory System</span>
+        </div>
+        <div id="logoutContainer">
+            <form method="post" action="/auth/logout" target="_top">
+                <a onclick="parentNode.submit()">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                </a>
+            </form>
+        </div>
+    </div>
+
+    <div class="navigationMenuContainer">
+        <span href="/" class="navigationMenu">Home</span>
+        <span href="/inventory" class="navigationMenu">Inventory</span>
+        <span href="/orders" class="navigationMenu">Orders</span>
+        <span href="/settings" aria-selected="true" class="navigationMenu">Settings</span>
+    </div>
+
+    <div class="container">
+        <div class="containerTitle">
+            Inventory
+        </div>
+
+        <div class="settingsContainer">
+            <div class="settingsCategory">
+                <div class="settingsCategoryTitle">
+                    Admin
+                </div>
+
+                <div class="settingsCategoryItem">
+                    <div class="settingsCategoryItemTitle">
+                        Account Management
+                    </div>
+                    <div class="settingsCategoryDetails">
+                        <form id="accountForm" action="/auth/signup" method="post">
+                            <div>
+                                <label for="username">Username:</label>
+                                <input type="text" name="username" placeholder="username" required autocomplete="off">
+                            </div>
+                            <div>
+                                <label for="password">Password:</label>
+                                <input type="password" name="password" placeholder="Password" required>
+                            </div>
+                            <div>
+                                <button id="accountSubmitButton" type="submit">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

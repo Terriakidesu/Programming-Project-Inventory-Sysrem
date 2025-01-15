@@ -9,14 +9,92 @@
     <link rel="stylesheet" href="/public/static/css/navbar.css">
     <link rel="stylesheet" href="/public/static/css/inventory.css">
     <link rel="stylesheet" href="/public/static/css/commons.css">
+    <link rel="stylesheet" href="/public/static/css/viewer.css">
     <link rel="stylesheet" href="/public/static/fontawesome/css/all.min.css">
     <script src="/public/static/fontawesome/js/all.min.js"></script>
     <script src="/public/static/js/navbar.js" defer></script>
     <script src="/public/static/js/inventory.js" defer></script>
+    <script src="/public/static/js/viewer.js" defer></script>
 
 </head>
 
 <body>
+    <div id="viewer" class="viewerContainer viewerHide">
+        <div class="viewer">
+            <form id="form" action="/api/products/save" method="post">
+                <div class="viewerMenu">
+                    <div class="viewerTitle">Product</div>
+                    <div class="viewerButton" id="closeButton">
+                        <span>
+                            <i class="fa-solid fa-xmark"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <input type="hidden" name="id">
+                <input type="hidden" name="hash">
+
+                <div class="viewerContents">
+                    <div class="viewerContent">
+                        <div class="viewerContentTitle">
+                            Product Name
+                        </div>
+                        <div class="viewerContentValue">
+                            <input type="text" required name="name">
+                        </div>
+                    </div>
+                    <div class="viewerContent">
+                        <div class="viewerContentTitle">
+                            Size
+                        </div>
+                        <div class="viewerContentValue">
+                            <input type="text" required name="size">
+                        </div>
+                    </div>
+                    <div class="viewerContent">
+                        <div class="viewerContentTitle">
+                            Quantity
+                        </div>
+                        <div class="viewerContentValue">
+                            <input type="number" required min="0" name="quantity">
+                        </div>
+                    </div>
+                    <div class="viewerContent">
+                        <div class="viewerContentTitle">
+                            Per Piece Price
+                        </div>
+                        <div class="viewerContentValue">
+                            <input type="number" required min="0" name="per_piece_price">
+                        </div>
+                    </div>
+                    <div class="viewerContent">
+                        <div class="viewerContentTitle">
+                            Wholesale Quantity
+                        </div>
+                        <div class="viewerContentValue">
+                            <input type="number" required min="0" name="wholesale_quantity">
+                        </div>
+                    </div>
+                    <div class="viewerContent">
+                        <div class="viewerContentTitle">
+                            Wholesale Price
+                        </div>
+                        <div class="viewerContentValue">
+                            <input type="number" required min="0" name="wholesale_price">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="viewerActionButtons">
+                    <button type="submit" class="viewerActionButton">
+                        <i class="fa-solid fa-floppy-disk"></i>
+                        Save
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <div class="navigationContainer">
         <div class="navigationTitleContainer">
             <span id="navigationTitle">Inventory System</span>
@@ -42,6 +120,23 @@
             Inventory
         </div>
 
+        <div class="containerMenu">
+            <span class="actionMenuButton">
+                <button type="button" onclick="addProduct()">
+                    <span>
+                        <i class="fa-solid fa-add"></i>
+                    </span>
+                    Add Product
+                </button>
+            </span>
+            <form action="/api/products/searchID" method="post" id="searchForm">
+                <span>
+                    <label for="query">Search: </label>
+                    <input name="query" autocomplete="off" type="search" placeholder="Search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </span>
+            </form>
+        </div>
 
         <div class="inventoryContainer">
             <div class="inventoryHeader">

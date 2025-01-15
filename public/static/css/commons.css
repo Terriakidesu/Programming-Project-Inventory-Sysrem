@@ -41,6 +41,10 @@
     opacity: 0;
 }
 
+.hidden {
+    display: none;
+}
+
 .container {
     margin: 1rem;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
@@ -56,4 +60,19 @@
     border-bottom: 1px solid rgb(124, 124, 124);
     background: rgb(237, 237, 237);
     border-radius: 5px 5px 0 0;
+}
+
+.containerMenu {
+    padding: 0.7rem;
+    padding-right: 2rem;
+    text-align: right;
+}
+
+.containerMenu>* {
+    display: inline-block;
+}
+
+
+.alignRight{
+    text-align: right;
 }

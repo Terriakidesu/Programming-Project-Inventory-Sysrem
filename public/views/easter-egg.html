@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Easter Egg</title>
+
+    <style>
+        body,
+        html {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: url("/public/static/assets/images/milad-fakurian-iFu2HILEng8-unsplash.jpg");
+            background-size: cover;
+            background-position: center;
+        }
+
+        .container {
+            background-color: rgba(0, 0, 0, 0.288);
+            width: 100lvw;
+            height: 100lvh;
+            position: fixed;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            align-self: center;
+
+        }
+
+        #easterEgg {
+            width: 30rem;
+            height: auto;
+            border-radius: 50%;
+            border: 10px solid rgb(192, 46, 255);
+
+            animation: 4s linear 0s infinite easterEgg, 1s linear 0s infinite easterEggRGB;
+
+            /* animation-name: easterEgg;
+            animation-timing-function: linear;
+            animation-delay: 0;
+            animation-duration: 4s;
+            animation-iteration-count: infinite; */
+        }
+
+
+        @keyframes easterEggRGB {
+            from {
+                box-shadow: 0 0 30px 30px hsl(0, 100%, 50%);
+            }
+
+            25% {
+                box-shadow: 0 0 30px 5px hsl(90, 100%, 50%);
+            }
+
+            50% {
+                box-shadow: 0 0 30px 50px hsl(180, 100%, 50%);
+
+            }
+
+            75% {
+                box-shadow: 0 0 30px 5px hsl(270, 100%, 50%);
+
+            }
+
+            to {
+                box-shadow: 0 0 30px 30px hsl(0, 100%, 50%);
+            }
+        }
+
+        @keyframes easterEgg {
+            from {
+                transform: rotate(0deg);
+            }
+
+
+            to {
+                transform: rotate(360deg);
+
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="container">
+        <img id="easterEgg" src="/public/static/assets/images/RaoraPointLaugh.jpg">
+    </div>
+</body>
+
+</html>

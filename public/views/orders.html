@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders</title>
+
+    <link rel="stylesheet" href="/public/static/css/navbar.css">
+    <link rel="stylesheet" href="/public/static/css/orders.css">
+    <link rel="stylesheet" href="/public/static/css/commons.css">
+    <link rel="stylesheet" href="/public/static/css/viewer.css">
+    <link rel="stylesheet" href="/public/static/fontawesome/css/all.min.css">
+    <script src="/public/static/fontawesome/js/all.min.js"></script>
+    <script src="/public/static/js/navbar.js" defer></script>
+    <script src="/public/static/js/orders.js" defer></script>
+    <script src="/public/static/js/viewer.js" defer></script>
+
+</head>
+
+<body>
+    <div id="viewer" class="viewerContainer viewerHide">
+        <div class="viewer" id="orderDetails">
+            <form id="form" action="/api/orders/save" method="post">
+                <div class="viewerMenu">
+                    <div class="viewerTitle">Order Details</div>
+                    <div class="viewerButton" id="closeButton">
+                        <span>
+                            <i class="fa-solid fa-xmark"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <input type="hidden" name="id">
+
+                <div class="viewerContents">
+                    <div class="viewerContent">
+                        <div class="viewerContentTitle">
+                            Customer Name
+                        </div>
+                        <div class="viewerContentValue">
+                            <input id="customerName" type="text" required name="name">
+                        </div>
+                    </div>
+                    <div class="viewerContent">
+                        <div class="viewerContentTitle">
+                            Total Cost
+                        </div>
+                        <div class="viewerContentValue alignRight">
+                            <i class="fa-solid fa-peso-sign"></i>
+                            <span id="orderTotalCost">0</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="viewerContents">
+                    <div class="viewerContent">
+                        <div class="viewerContentTitle">
+                            Total Quantity
+                        </div>
+                        <div class="viewerContentValue alignRight">
+                            <span id="orderTotalQuantity">0</span>
+                        </div>
+                    </div>
+                    <div class="viewerContent">
+                        <div class="viewerContentTitle">
+                            Date Ordered
+                        </div>
+                        <div class="viewerContentValue alignRight">
+                            <span id="orderDate">0</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="viewerContents" id="orderViewerContents">
+                    <div class="viewerContent" id="orderViewerContent">
+                        <div class="viewerContentTitle" id="orderDetailsTitle">
+                            <span>Orders</span>
+
+                            <span>
+                                <input id="orderSearch" type="search" name="query" placeholder="search">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </span>
+                        </div>
+                        <div class="viewerContentValue" id="orderDetailsValue">
+
+                            <div id="orderDetailItems" class="orderDetailItems">
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="viewerActionButtons">
+                    <button type="submit" class="viewerActionButton">
+                        <i class="fa-solid fa-floppy-disk"></i>
+                        Save
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="navigationContainer">
+        <div class="navigationTitleContainer">
+            <span id="navigationTitle">Inventory System</span>
+        </div>
+        <div id="logoutContainer">
+            <form method="post" action="/auth/logout" target="_top">
+                <a onclick="parentNode.submit()">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                </a>
+            </form>
+        </div>
+    </div>
+
+    <div class="navigationMenuContainer">
+        <span href="/" class="navigationMenu">Home</span>
+        <span href="/inventory" class="navigationMenu">Inventory</span>
+        <span href="/orders" aria-selected="true" class="navigationMenu">Orders</span>
+        <span href="/settings" class="navigationMenu">Settings</span>
+    </div>
+
+    <div class="container">
+        <div class="containerTitle">
+            Orders
+        </div>
+
+        <div class="containerMenu">
+            <span class="actionMenuButton">
+                <button type="button" onclick="addProduct()">
+                    <span>
+                        <i class="fa-solid fa-add"></i>
+                    </span>
+                    Add Order
+                </button>
+            </span>
+        </div>
+
+        <div id="orderItems" class="orderItems">
+            <div class="orderItem" product-id="">
+                <div class="orderItemHeader">
+                    <span class="orderItemTitle">
+                        Product ID
+                    </span>
+                </div>
+                <div class="orderItemDetails">
+                    <div class="orderItemDetail">
+                        <span>Customer</span>
+                        <span>[Name]</span>
+                    </div>
+                    <div class="orderItemDetail">
+                        <span>Order Date</span>
+                        <span>[Date]</span>
+                    </div>
+                    <div class="orderItemDetail2">
+                        <span>Order Details</span>
+                        <div class="orderItemDetail">
+                            <div class="orderItemDetail">
+                                <span>Quantity</span>
+                                <span>[Quantity]</span>
+                            </div>
+                            <div class="orderItemDetail">
+                                <span>Cost</span>
+                                <span class="orderItemCost">
+                                    <i class="fa-solid fa-peso-sign"></i>
+                                    <span>[Cost]</span>
+                                </span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="orderItemButtons">
+                    <button class="orderItemButton">
+                        <i class="fa-solid fa-pen"></i>
+                        Edit
+                    </button>
+                    <button class="orderItemButton" name="delete">
+                        <i class="fa-solid fa-trash-can"></i>
+                        Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

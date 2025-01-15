@@ -1,4 +1,3 @@
-
 let form = document.getElementById("loginForm");
 let submitButton = document.getElementById("submitButton");
 let showHideButton = document.getElementById("showHideButton");
@@ -63,3 +62,5 @@ showHideButton.addEventListener("click", (event) => {
         passwordInput.type = "password";
     }
 })
+
+

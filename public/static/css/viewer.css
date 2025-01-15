@@ -1,0 +1,104 @@
+.viewerContainer {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    width: 100lvw;
+    height: 100lvh;
+    background-color: rgba(0, 0, 0, 0.418);
+    z-index: 99;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    transition: opacity 100ms ease-in-out, z-index 100ms linear;
+}
+
+.viewer {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin: 5rem;
+    justify-content: space-between;
+    background-color: rgb(221, 221, 221);
+    border-radius: 10px;
+    box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.185)
+}
+
+.viewerMenu {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-content: center;
+    background-color: rgb(165, 165, 165);
+    padding: 0.5rem 1rem;
+    border-radius: 10px 10px 0 0;
+}
+
+.viewerMenu>div {
+    display: inline-block;
+}
+
+.viewerMenu>.viewerTitle {
+    padding-left: 1rem;
+    font-size: xx-large;
+    color: rgb(63, 63, 63);
+}
+
+.viewerMenu>.viewerButton {
+    font-size: x-large;
+    vertical-align: middle;
+    cursor: pointer;
+    color: rgb(63, 63, 63);
+    transition: color 100ms ease-in-out;
+}
+
+.viewerMenu>.viewerButton:hover {
+    color: red;
+}
+
+.viewerActionButtons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    background-color: rgb(235, 235, 235);
+    padding: 0.5rem;
+    padding-right: 1.5rem;
+    border-radius: 0 0 10px 10px;
+}
+
+.viewerActionButton {
+    font-size: large;
+    padding: 0.4rem 0.7rem;
+}
+
+.viewerContents {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    gap: 1rem;
+    padding: 0.5rem;
+}
+
+.viewerContent {
+    display: inline-block;
+    background-color: white;
+    padding: 1rem;
+    border-radius: 5px;
+    flex-grow: 1;
+}
+
+.viewerContentTitle {
+    font-size: larger;
+    padding-bottom: 1rem;
+
+}
+
+.viewerContentValue>input {
+    width: 100%;
+    font-size: x-large;
+}
+
+.viewerHide {
+    opacity: 0.0;
+    z-index: -1;
+}

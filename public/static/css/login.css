@@ -148,3 +148,8 @@ body {
     border: 3px solid var(--border-color);
 
 }
+
+#loginIcon {
+    display: inline-block;
+    transition: all 100ms ease-in-out;
+}
