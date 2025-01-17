@@ -1,4 +1,8 @@
 fastapi
-watchdog
+uvicorn
+itsdangerous
+Jinja2
+tinydb
+thefuzz
 cryptography
-TinyDB
+watchdog

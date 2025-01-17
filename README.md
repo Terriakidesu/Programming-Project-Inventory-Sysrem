@@ -51,7 +51,14 @@ If it's running locally you can access the server on http://localhost:8000/
 #### Python Dependencies
 
 The framework and libraries used by this system.
-* [FastAPI](https://fastapi.tiangolo.com/)
-* [TinyDB](https://tinydb.readthedocs.io/en/latest/)
-* [Watchdog](https://github.com/gorakhargosh/watchdog)
-* [Cryptography](https://cryptography.io/en/latest/)
+* [FastAPI](https://fastapi.tiangolo.com/) - Web Framework
+* [Uvicorn](https://www.uvicorn.org/) - ASGI Web Server
+* [Jinja2](https://jinja.palletsprojects.com/en/stable/) - HTML templating engine
+* [TinyDB](https://tinydb.readthedocs.io/en/latest/) - Database 
+* [TheFuzz](https://github.com/seatgeek/thefuzz) - Fuzzy string matching
+* [Watchdog](https://github.com/gorakhargosh/watchdog) - File Observer
+* [Cryptography](https://cryptography.io/en/latest/) - Encrytion/Decryption
+
+#### Icons
+
+* [Font Awesome](https://fontawesome.com/) - Icons used in the WebUI
