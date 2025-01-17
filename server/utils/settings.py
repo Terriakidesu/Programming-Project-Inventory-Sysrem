@@ -23,21 +23,31 @@ class SecretsSettings(BaseModel):
 
 
 class ConfigSettings(object):
+    """
+    An object singleton that stores the settings.
+    """
+
     __metaclass__ = Singleton
 
     def __init__(self):
-        load_dotenv()
+        load_dotenv()  # loads the .env file
 
         self.checkConfig()
         self.config = configparser.ConfigParser()
         self.readConfig()
 
     def checkConfig(self):
+        """
+        Check if config file exists else create one.
+        """
         if not os.path.isfile(CONFIG_PATH):
             with open(CONFIG_PATH, "w") as f:
                 f.write(DEFAULT_CONFIG)
 
     def readConfig(self):
+        """
+        Reads the Config files
+        """
         self.config.read(CONFIG_PATH)
 
         self.Cookie: CookieSettings = CookieSettings(

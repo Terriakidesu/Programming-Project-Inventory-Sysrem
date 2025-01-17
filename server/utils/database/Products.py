@@ -1,19 +1,26 @@
+"""
+Product utilities
+"""
+
+from typing import Annotated
 
 from .models import Beverage
 from pydantic import ValidationError
 from thefuzz import fuzz
 from typing import List
-from hashlib import md5
 import logging
 
 from . import database, query
-from ...utils import generate_md5_hash
 
 
 beverage_table = database.table("beverages")
 
 
 def search(name: str) -> List[Beverage]:
+    """
+    Search for a product using it's name (case insensitive).
+    """
+
     product_queries = beverage_table.search(
         query.name.test(lambda n: fuzz.partial_ratio(n.lower(), name.lower()) >= 80))
 
@@ -29,7 +36,13 @@ def search(name: str) -> List[Beverage]:
     return products_tmp
 
 
-def searchID(name: str) -> List[Beverage]:
+def searchID(name: str) -> List[str]:
+    """
+    Search for a product using it's name (case insensitive).
+
+    Returns a list of product IDs.
+
+    """
     product_queries = beverage_table.search(
         query.name.test(lambda n: fuzz.partial_ratio(n.lower(), name.lower()) >= 80))
 
@@ -46,6 +59,10 @@ def searchID(name: str) -> List[Beverage]:
 
 
 def fetchAll() -> List[Beverage]:
+    """
+    Fetches all of the available products from the database.
+    """
+
     beverages = []
     for item in beverage_table.all():
         try:
@@ -58,8 +75,11 @@ def fetchAll() -> List[Beverage]:
 
 
 def saveProduct(product: Beverage):
-
+    """
+    Saves the product into the database.
+    """
     if beverage_table.get(query.id == product.id):
+        # If a product already exists return false.
         return False
 
     try:
@@ -71,16 +91,19 @@ def saveProduct(product: Beverage):
     return False
 
 
-def editProduct(product: Beverage):
+def editProduct(product_id: str, new_product_data: Beverage):
+    """
+    Edit the product
+    """
 
-    if beverage_table.get(query.id == product.id):
+    if beverage_table.get(query.id == product_id):
 
         try:
-            beverage_table.update(product.model_dump(), query.id == product.id)
+            beverage_table.update(
+                new_product_data.model_dump(), query.id == product_id)
             return True
         except Exception:
-            ...
-        return False
+            return False
 
     return False
 

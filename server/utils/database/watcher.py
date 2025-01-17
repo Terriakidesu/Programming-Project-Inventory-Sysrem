@@ -1,4 +1,3 @@
-
 import time
 import logging
 
@@ -9,16 +8,20 @@ from . import db_status, PATH
 
 
 class FileChangeHandler(FileSystemEventHandler):
+    """
+    Watches the file for changes
+    """
 
     def on_modified(self, event):
-
         db_status["changed"] = True
 
         return super().on_modified(event)
 
 
 def watch_database_file():
-
+    """
+    Creates a watcher for the database file
+    """
     event_handler = FileChangeHandler()
 
     observer = Observer()

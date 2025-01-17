@@ -1,3 +1,6 @@
+"""
+    Order utils
+"""
 
 from .models import Order
 from pydantic import ValidationError
@@ -11,6 +14,9 @@ orders_table = database.table("orders")
 
 
 def fetchAll() -> List[Order]:
+    """
+    Fetches all of the available orders in the database.
+    """
     orders = []
     for item in orders_table.all():
         try:
@@ -23,7 +29,9 @@ def fetchAll() -> List[Order]:
 
 
 def saveOrder(order: Order):
-
+    """
+    Saves the order into the database
+    """
     if orders_table.get(query.id == order.id):
         return False
 
@@ -37,10 +45,13 @@ def saveOrder(order: Order):
     return False
 
 
-def editOrder(order: Order):
-    if orders_table.get(query.id == order.id):
+def editOrder(order_id: str, order: Order):
+    """
+    Edits the order specified by the order's ID.
+    """
+    if orders_table.get(query.id == order_id):
         try:
-            orders_table.update(order.model_dump(), query.id == order.id)
+            orders_table.update(order.model_dump(), query.id == order_id)
         except Exception as e:
             print(e)
             return False
@@ -71,11 +82,16 @@ def deleteOrderByID(order_id: str):
 
 
 def getOrderCount():
+    """
+    Returns the available order count.
+    """
     return orders_table.count(query.id != "")
 
 
 def getTotalProfits():
-
+    """
+    Calculates the total profits from the orders.
+    """
     profits = 0
 
     for order in fetchAll():

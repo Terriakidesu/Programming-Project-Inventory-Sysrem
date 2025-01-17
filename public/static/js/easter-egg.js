@@ -1,5 +1,8 @@
-
+/**
+ * Secret
+ */
 window.addEventListener("DOMContentLoaded", ev => {
+
     let loginIconClicked = 0;
     let loginIconTimeout;
 

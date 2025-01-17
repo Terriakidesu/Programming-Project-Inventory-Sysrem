@@ -30,6 +30,7 @@ templates = Jinja2Templates(directory="public/views")
 @app.get("/")
 async def root(request: Request):
 
+    # if the account exists redirect to the dashboard page else redirect to the login page
     if Account_Manager.account_exists:
         if "authenticated" in request.session or request.get("authenticated"):
             return RedirectResponse("/dashboard")
@@ -75,14 +76,18 @@ async def settings(request: Request, authenticated=Depends(isAuthenticated)):
 
 @app.get("/login")
 async def loginPage(request: Request):
+
+    # If the account doesn't exists redirect to the signup page.
     if not Account_Manager.account_exists:
         return RedirectResponse("/signup")
 
     session = request.session
 
+    # check if authenticated or not.
     if "authenticated" not in session or not session["authenticated"]:
         return templates.TemplateResponse("login.html", {"request": request})
 
+    # redirect to the root page
     return RedirectResponse("/", status_code=302)
 
 
@@ -90,8 +95,11 @@ async def loginPage(request: Request):
 async def signupPage(request: Request):
     session = request.session
 
+    # If the account already exists redirect to the login page.
     if Account_Manager.account_exists:
         return RedirectResponse("/login")
+    else:
+        request.session.clear()
 
     if "authenticated" not in session or not session["authenticated"]:
         return templates.TemplateResponse("signup.html", {"request": request})
@@ -101,9 +109,15 @@ async def signupPage(request: Request):
 
 @app.get("/easter-egg")
 async def easterEgg(request: Request):
+    """
+    Secret
+    """
     return templates.TemplateResponse("easter-egg.html", {"request": request})
 
 
 @app.exception_handler(401)
 async def unauthorizedRedirect(request: Request, exception):
-    return RedirectResponse("/login")
+    """
+    If the user is unauthorized redirect to the root
+    """
+    return RedirectResponse("/")

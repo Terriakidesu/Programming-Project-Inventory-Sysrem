@@ -20,13 +20,18 @@ auth_router = APIRouter(prefix="/auth")
 
 @auth_router.post("/login")
 async def auth_login(request: Request, account: Annotated[Account, Form()]):
+    """
+    Authentication route for logging in.
+    """
 
+    # Check if user is already logged in.
     if request.session.get("authenticated"):
         return JSONResponse({
             "success": True,
             "message": "Already Authenticated"
         })
 
+    # Check if username and password is correct
     if not Account_Manager.verify_auth(account):
         return JSONResponse({
             "success": False,
@@ -35,6 +40,7 @@ async def auth_login(request: Request, account: Annotated[Account, Form()]):
 
     now = datetime.now(timezone.utc)
 
+    # Create the neccessary data for the user's session
     request.session["authenticated"] = True
     request.session["created_at"] = now.isoformat()
     request.session["refreshed_at"] = now.isoformat()
@@ -49,9 +55,13 @@ async def auth_login(request: Request, account: Annotated[Account, Form()]):
 
 @auth_router.post("/signup")
 async def auth_signup(request: Request, account: Annotated[Account, Form()]):
+    """
+    Authentication route for signing in.
+    """
 
     now = datetime.now(timezone.utc)
 
+    # Create the neccessary data for the user's session
     request.session["authenticated"] = True
     request.session["created_at"] = now.isoformat()
     request.session["refreshed_at"] = now.isoformat()
@@ -59,6 +69,7 @@ async def auth_signup(request: Request, account: Annotated[Account, Form()]):
     request.session["expires_at"] = expires_at.isoformat()
 
     try:
+        # Save the account
         Account_Manager.save_account(account)
         return {
             "success": True,
@@ -75,6 +86,9 @@ async def auth_signup(request: Request, account: Annotated[Account, Form()]):
 
 @auth_router.get("/session", response_class=JSONResponse)
 async def check_session(request: Request):
+    """
+    Authentication route for checking the session.
+    """
 
     if not request.session.get("authenticated"):
         return {
@@ -93,8 +107,13 @@ async def check_session(request: Request):
 
 @auth_router.post("/logout")
 async def auth_logout(request: Request, session: SessionData = Depends(getCurrentSession)):
+    """
+    Authentication route for logging out.
+    """
 
     if session.authenticated:
+        # clear the session data
         request.session.clear()
 
+        # redirect to the login page
         return RedirectResponse("/login", status_code=302)

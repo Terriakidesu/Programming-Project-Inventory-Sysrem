@@ -59,14 +59,14 @@ accountForm.addEventListener("submit", async ev => {
         body: formData,
     }).then(async res => {
 
-        return;
+        // return;
         if (res.status == 200) {
 
             let singupStatus = await res.json();
             if (singupStatus.success) {
                 submitButton.disabled = false;
 
-                window.alert("")
+                window.alert("Changed Successfully");
 
             } else {
                 setTimeout(() => {

@@ -1,3 +1,9 @@
+"""
+
+Functions for FastAPI's `Depends()`
+
+"""
+
 from datetime import datetime, timezone, timedelta
 
 from fastapi import Request
@@ -8,6 +14,10 @@ from ...utils import Settings
 
 
 def sessionRefresh(request: Request):
+    """
+    Refreshes the session timeout
+    """
+
     expires_at = request.session.get("expires_at")
     if not expires_at:
         return False
@@ -29,6 +39,10 @@ def sessionRefresh(request: Request):
 
 
 def getCurrentSession(request: Request):
+    """
+    Gets the current user's session
+    """
+
     session = request.session
 
     if "authenticated" not in session or not session["authenticated"]:
@@ -40,10 +54,25 @@ def getCurrentSession(request: Request):
     return SessionData(**request.session)
 
 
-def isAuthenticated(request: Request):
+def isAuthenticated(request: Request) -> bool:
+    """
+    Checks if user is authenticated.
+    """
     session = request.session
 
     if "authenticated" not in session or not session["authenticated"]:
         return False
 
     return sessionRefresh(request)
+
+
+def isAuthenticatedNoRefresh(request: Request) -> bool:
+    """
+    Checks if user is authenticated but it doesn't refresh the session timeout.
+    """
+    session = request.session
+
+    if "authenticated" not in session or not session["authenticated"]:
+        return False
+
+    return True

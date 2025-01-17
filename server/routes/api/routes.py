@@ -1,15 +1,20 @@
+"""
+
+API routes
+
+"""
+
 import time
 import json
-import logging
 
 from uuid import uuid4
 from typing import Annotated
 
-from fastapi import APIRouter, Request, Form, Depends
+from fastapi import APIRouter, Request, Form, Depends, status
 from fastapi.responses import JSONResponse, StreamingResponse
 from fastapi.exceptions import HTTPException
 
-from ..auth.dependencies import isAuthenticated
+from ..auth.dependencies import isAuthenticated, isAuthenticatedNoRefresh
 from ...utils import database, generate_md5_hash
 from ...utils.database import Products, Orders
 from ...utils.database.models import Beverage, Order
@@ -21,7 +26,8 @@ api_router = APIRouter(prefix="/api")
 async def search_product(request: Request, query: str = Form(...), authenticated=Depends(isAuthenticated)):
 
     if not authenticated:
-        raise HTTPException(status_code=401, detail="Not Allowed")
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Not Allowed")
 
     if query is None or query.strip() == "":
         return []
@@ -34,7 +40,8 @@ async def search_product(request: Request, query: str = Form(...), authenticated
 async def search_product(request: Request, query: str = Form(...), authenticated=Depends(isAuthenticated)):
 
     if not authenticated:
-        raise HTTPException(status_code=401, detail="Not Allowed")
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Not Allowed")
 
     if query is None or query.strip() == "":
         return []
@@ -47,7 +54,8 @@ async def search_product(request: Request, query: str = Form(...), authenticated
 async def fetch_all_products(request: Request, authenticated=Depends(isAuthenticated)):
 
     if not authenticated:
-        raise HTTPException(status_code=401, detail="Not Allowed")
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Not Allowed")
 
     return Products.fetchAll()
 
@@ -56,7 +64,8 @@ async def fetch_all_products(request: Request, authenticated=Depends(isAuthentic
 async def get_product(request: Request, product_id: str, authenticated=Depends(isAuthenticated)):
 
     if not authenticated:
-        raise HTTPException(status_code=401, detail="Not Allowed")
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Not Allowed")
 
     return Products.getProductByID(product_id)
 
@@ -65,12 +74,16 @@ async def get_product(request: Request, product_id: str, authenticated=Depends(i
 async def save_product(request: Request, product: Annotated[Beverage, Form()], authenticated=Depends(isAuthenticated)):
 
     if not authenticated:
-        raise HTTPException(status_code=401, detail="Not Allowed")
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Not Allowed")
 
     if product.id == "":
+        # create an unique ID for the product
         product.id = str(uuid4())
 
     if product.hash == "":
+        # generate a unique hash based from the product's name and size.
+
         product.hash = generate_md5_hash(
             product.name.lower().strip() + product.size.replace(" ", "").lower())
 
@@ -91,12 +104,14 @@ async def save_product(request: Request, product: Annotated[Beverage, Form()], a
 @api_router.post("/products/edit", response_class=JSONResponse)
 async def edit_product(request: Request, product: Annotated[Beverage, Form()], authenticated=Depends(isAuthenticated)):
     if not authenticated:
-        raise HTTPException(status_code=401, detail="Not Allowed")
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Not Allowed")
 
+    # generate a new product hash
     product.hash = generate_md5_hash(
         product.name.lower().strip() + product.size.replace(" ", "").lower())
 
-    result = Products.editProduct(product)
+    result = Products.editProduct(product.id, product)
 
     return {
         "success": result,
@@ -108,7 +123,8 @@ async def edit_product(request: Request, product: Annotated[Beverage, Form()], a
 async def delete_product(request: Request, product_id: str, authenticated=Depends(isAuthenticated)):
 
     if not authenticated:
-        raise HTTPException(status_code=401, detail="Not Allowed")
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Not Allowed")
 
     try:
         Products.deleteProductByID(product_id)
@@ -135,10 +151,13 @@ async def add_order(request: Request,
                     authenticated=Depends(isAuthenticated)):
 
     if not authenticated:
-        raise HTTPException(status_code=401, detail="Not Allowed")
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Not Allowed")
 
+    # parse the JSON string into Python dictionary
     orders = json.loads(orders)
 
+    # Create a new dictionary
     order_data = {
         "id": id,
         "name": name,
@@ -148,9 +167,11 @@ async def add_order(request: Request,
         "total_price": total_price,
     }
 
+    # Turn it into a Pydantic Object
     order = Order(**order_data)
 
     if order.id == "":
+        # Generate unique Id for the order.
         order.id = str(uuid4())
 
     result = Orders.saveOrder(order)
@@ -172,7 +193,8 @@ async def edit_order(request: Request,
                      authenticated=Depends(isAuthenticated)):
 
     if not authenticated:
-        raise HTTPException(status_code=401, detail="Not Allowed")
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Not Allowed")
 
     orders = json.loads(orders)
 
@@ -187,7 +209,7 @@ async def edit_order(request: Request,
 
     order = Order(**order_data)
 
-    result = Orders.editOrder(order)
+    result = Orders.editOrder(order.id, order)
 
     return {
         "success": result,
@@ -198,7 +220,8 @@ async def edit_order(request: Request,
 @api_router.get("/orders/all", response_class=JSONResponse)
 async def fecth_all_orders(request: Request, authenticated=Depends(isAuthenticated)):
     if not authenticated:
-        raise HTTPException(status_code=401, detail="Not Allowed")
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Not Allowed")
 
     return Orders.fetchAll()
 
@@ -207,7 +230,8 @@ async def fecth_all_orders(request: Request, authenticated=Depends(isAuthenticat
 async def get_order(request: Request, order_id: str, authenticated=Depends(isAuthenticated)):
 
     if not authenticated:
-        raise HTTPException(status_code=401, detail="Not Allowed")
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Not Allowed")
 
     return Orders.getOrderByID(order_id)
 
@@ -216,7 +240,8 @@ async def get_order(request: Request, order_id: str, authenticated=Depends(isAut
 async def delete_order(request: Request, order_id: str, authenticated=Depends(isAuthenticated)):
 
     if not authenticated:
-        raise HTTPException(status_code=401, detail="Not Allowed")
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Not Allowed")
 
     try:
         Orders.deleteOrderByID(order_id)
@@ -233,8 +258,10 @@ async def delete_order(request: Request, order_id: str, authenticated=Depends(is
 
 
 @api_router.get("/database/status", response_class=StreamingResponse)
-async def fetch_db_status(request: Request, authenticated=Depends(isAuthenticated)):
-
+async def fetch_db_status(request: Request, authenticated=Depends(isAuthenticatedNoRefresh)):
+    """
+    API route for event streaming the database status 
+    """
     def db_changed():
         while True:
             yield f"event: databaseStatus\ndata: {json.dumps(database.db_status)}\n\n"
@@ -245,10 +272,13 @@ async def fetch_db_status(request: Request, authenticated=Depends(isAuthenticate
 
 
 @api_router.get("/dashboard/stats", response_class=StreamingResponse)
-async def fetch_dashboard_stats(request: Request, authenticated=Depends(isAuthenticated)):
-
+async def fetch_dashboard_stats(request: Request, authenticated=Depends(isAuthenticatedNoRefresh)):
+    """
+    API route for event streaming the dashboard statistics.
+    """
     if not authenticated:
-        raise HTTPException(status_code=401, detail="Not Allowed")
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Not Allowed")
 
     def dashboard_stats():
 

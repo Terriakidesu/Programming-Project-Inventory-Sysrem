@@ -1,22 +1,32 @@
 let searchResults = [];
 let isSearching = false;
 
+/**
+ * Loads the available products and display them.
+ */
 async function loadProducts() {
+
     let productItems = document.getElementById("orderDetailItems");
 
     await fetch("/api/products/all").then(async res => {
 
         let results = await res.json();
 
+        // clears the elements children
         productItems.replaceChildren();
 
         for (let product of results) {
+            // if the product is not the search result skip it
             if (!searchResults.includes(product.id) && isSearching) continue;
+            // add the product as an element
             addProductItem(product);
         }
     });
 }
 
+/**
+ * Loads the available orders and display them
+ */
 async function loadOrders() {
     let orderItems = document.getElementById("orderItems");
 
@@ -33,6 +43,10 @@ async function loadOrders() {
     });
 }
 
+/**
+ * Adds the product as an HTML element
+ * @param {Object} product 
+ */
 function addProductItem(product) {
 
     let productItems = document.getElementById("orderDetailItems");
@@ -174,11 +188,16 @@ function addProductItem(product) {
 
     productItems.appendChild(orderItem);
 
+    /**
+     * Calculate the product's total cost
+     */
     function setTotalCost() {
 
         let quantity = quantityInput.valueAsNumber;
 
+        // get the wholesale quantity
         let quantity_wholesale = Math.floor(quantity / product.wholesale_quantity);
+        // get the inidividual quantity without the wholesale
         let quantity_individual = Math.abs((quantity_wholesale * product.wholesale_quantity) - quantity);
 
         let wholesale_total_cost = quantity_wholesale * product.wholesale_price;
@@ -187,7 +206,6 @@ function addProductItem(product) {
         let totalCost = wholesale_total_cost + individual_total_cost;
 
         costValueText.textContent = totalCost;
-
 
         orderItem.setAttribute("cost", totalCost);
         orderItem.setAttribute("quantity", quantity);
@@ -224,6 +242,10 @@ function addProductItem(product) {
     });
 }
 
+/**
+ * Adds the Order as an HTML element
+ * @param {Object} order 
+ */
 function addOrderItem(order) {
 
     let dt = new Date(order.date)
@@ -372,6 +394,10 @@ function addOrderItem(order) {
     orderItems.appendChild(orderItem);
 };
 
+
+/**
+ * Sets the Order Form's Details
+ */
 function setOrderDetails() {
 
     let totalCostSpan = document.getElementById("orderTotalCost");
@@ -395,6 +421,9 @@ function setOrderDetails() {
 
 }
 
+/**
+ * Resets the Order Form's details.
+ */
 function resetOrderDetails() {
     let orderSearchItems = document.getElementById("orderDetailItems");
     let totalCostSpan = document.getElementById("orderTotalCost");
@@ -418,6 +447,9 @@ function resetOrderDetails() {
     setOrderDetails();
 }
 
+/**
+ * Adds the product into the database
+ */
 async function addProduct() {
 
     let dateSpan = document.getElementById("orderDate");
@@ -437,6 +469,10 @@ async function addProduct() {
     await loadProducts();
 }
 
+/**
+ * Get's the data from the Order's Form.
+ * @returns FormData
+ */
 function getFormData() {
 
     let formData = new FormData();
@@ -476,6 +512,10 @@ function getFormData() {
 
 }
 
+/**
+ * Sets the data of the Order's Form
+ * @param {Object} order 
+ */
 function setFormData(order) {
     let form = document.getElementById("form");
     let orderDetailItems = document.getElementById("orderDetailItems");
@@ -510,6 +550,7 @@ function setFormData(order) {
 
 window.addEventListener("DOMContentLoaded", async () => {
 
+    // event stream for checking the database status
     const eventSource = new EventSource("/api/database/status");
 
     let lastChangedValue = false;
@@ -517,7 +558,7 @@ window.addEventListener("DOMContentLoaded", async () => {
 
     eventSource.addEventListener("databaseStatus", async (event) => {
         let data = JSON.parse(event.data);
-
+        // if the database has changed reload the orders
         if (data.changed) {
             if (!hasChanged) {
                 await loadOrders();

@@ -10,6 +10,7 @@ function validateForm(username, password) {
     username = username || "";
     password = password || "";
 
+    // RegExp patterns for username/password verfication
     let usernamePattern = /(?=.*[:-@\[-^`{-~\s]).*/
     let passwordPatterns = {
         "space": /(?=.*\s).*/,
