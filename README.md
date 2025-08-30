@@ -16,7 +16,9 @@ This is a simple **Inventory Management System (IMS)** server powered by Python 
 
 ## Installation
 
-### It is recommeded to create a virtual environment
+> [!TIP]
+> It is recommeded to create a virtual environment
+
 Creating the virtual environment
 ```
 py -m venv .venv
